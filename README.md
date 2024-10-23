@@ -331,38 +331,7 @@ assemble a roster capable of competing at the highest level.
 The graph below illustrates the Dodgers’ consistent investment in their
 on-field product:
 
-    # Create a ggplot object with pay_data as the data and specify aesthetics
-    ggplot(pay_data, aes(x = teampayroll / 1000000, y = year, color = year)) +
-      # Add jitter to the scatter plot for better visualization
-      geom_point(position = position_jitter(width = .1, height = .2), alpha = .5) +  
-      # Highlight the Dodgers' payroll with a different color and size
-      geom_point(data = dodgers, color = "#EF3E42", size = 2) +  
-      # Add labels and titles to the plot
-      labs(x = "Payroll (Millions)", y = "",  
-           subtitle = "MLB Team Payrolls: Past 10 Seasons",
-           title = "The Dodgers Are Consistently One of the Top 5 Spenders",
-           caption = "Data source: Baseball Cube") +
-      # Set breaks for the y-axis
-      scale_y_continuous(breaks = unique(combined_pay_data$year)) +
-      # Change theme to minimal
-      theme_minimal() +  
-      # Add labels for the Dodgers' payroll rank
-      geom_text(data = dodgers, aes(label = PayrollRank), fontface = "bold.italic", color = "#EF3E42", size = 4.5, vjust = -1.3, family = "serif") +  
-      # Format title, subtitle, and axis titles
-      theme(plot.title = element_text(size = 16, face = "bold.italic"),  
-            plot.subtitle = element_text(size = 14, face = "bold", color = "#EF3E42", hjust = 0.02, family = "serif"),
-            axis.title.x = element_text(size = 14, family = "serif", face = "bold", vjust = -2),
-            plot.caption = element_text(size = 10, family = "serif"),
-            axis.text.x = element_text(size = 12, family = "serif"),
-            axis.text.y = element_text(size = 12, family = "serif"),
-            panel.grid.minor.y = element_blank(),  
-            panel.grid.minor.x = element_blank(),
-            panel.grid.major.x = element_blank()
-            ) +
-      # Remove the legend
-      guides(color = FALSE)  
-
-![](Final-Project_files/figure-markdown_strict/unnamed-chunk-2-1.png)
+![unnamed-chunk-2-1](https://github.com/user-attachments/assets/8a07d149-3635-47c0-8c76-da50e9ca17c8)
 
 Over the past decade, the Los Angeles Dodgers have consistently ranked
 among the top five teams in terms of payroll expenditure, a testament to
@@ -409,73 +378,8 @@ Comparing the Dodgers to the Athletics and other teams across the league
 provides valuable insights into how financial dynamics shape the
 competitive landscape of Major League Baseball.
 
-    # Create a ggplot object with pay_data as the data and specify aesthetics
-    ggplot(pay_data, aes(x = year, y = wpct, group = teamname, color = Color_Category)) +
-      # Add a dashed line plot with transparency and smaller size
-      geom_line(alpha = .5, size = .6, linetype = "dashed") +
-      # Manually set colors for the color scale
-      scale_color_manual(values = c("darkgray", "black"))+
-      # Add points to the plot with size and transparency
-      geom_point(size = 1.5, alpha = .5) +
-      # Add a solid line plot for Dodgers' data with a specific color and size
-      geom_line(data = dodgers, aes(x = year, y = wpct), color = "#005A9C", size = 2) +
-      # Add a solid line plot for Athletics' data with a specific color and size
-      geom_line(data = athletics, aes(x = year, y = wpct), color = "#11734C", size = 2) +
-      # Add text labels for Dodgers' data with filters for specific years
-      geom_text(data = filter(dodgers, year != 2014 & year != 2015 & year != 2016 & year != 2018 & year != 2021 & year != 2023), aes(x = year, y = wpct, label = mlbrk), color = "#005A9C", vjust = -1, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Dodgers' data with filters for specific years
-      geom_text(data = filter(dodgers, year == 2014 | year == 2015), aes(x = year, y = wpct, label = mlbrk), color = "#005A9C", vjust = -.5, hjust = -.5, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Dodgers' data with filters for specific years
-      geom_text(data = filter(dodgers, year == 2016 | year == 2018), aes(x = year, y = wpct, label = mlbrk), color = "#005A9C", vjust = .7, hjust = -1, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Dodgers' data with filters for specific years
-      geom_text(data = filter(dodgers, year == 2021 | year == 2023), aes(x = year, y = wpct, label = mlbrk), color = "#005A9C", vjust = 1.5, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Athletics' data with filters for specific years
-      geom_text(data = filter(athletics, year != 2017 & year != 2022 & year != 2015 & year != 2016 & year != 2021), 
-                aes(x = year, y = wpct, label = mlbrk), color = "#11734C", vjust = -.7, hjust = -.2, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Athletics' data with filters for specific years
-      geom_text(data = filter(athletics, year == 2015), aes(x = year, y = wpct, label = mlbrk), 
-                color = "#11734C", vjust = -1, hjust = -.05, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Athletics' data with filters for specific years
-      geom_text(data = filter(athletics,year == 2022), aes(x = year, y = wpct, label = mlbrk), 
-                color = "#11734C", vjust = -.3, hjust = -.3, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Athletics' data with filters for specific years
-      geom_text(data = filter(athletics, year == 2017), aes(x = year, y = wpct, label = mlbrk), color = "#11734C", vjust = -.3, hjust = 1.35, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Athletics' data with filters for specific years
-      geom_text(data = athletics %>% filter(year == 2021), 
-                aes(x = year, y = wpct, label = mlbrk), color = "#11734C", vjust = -.2, hjust = -.2, family = "serif", fontface = "bold", size = 5) +
-      # Add text labels for Athletics' data with filters for specific years
-      geom_text(data = athletics %>% filter(year == 2016), 
-                aes(x = year, y = wpct, label = mlbrk), color = "#11734C", vjust = 2, family = "serif", fontface = "bold", size = 5) +
-      # Add labels and titles to the plot
-      labs(x = "Season", y = "Win %", 
-           subtitle = "MLB Team Win Percentage Over the Past 10 Seasons",
-           title = "As the Dodgers Get Better, the Disparity in the League Grows",
-           caption = "Data source: Baseball Reference, Baseball Cube, MLB, & Forbes | Note: The Dodgers made the playoffs every year 2014-2023") +
-      # Set breaks for the x-axis
-      scale_x_continuous(breaks = unique(pay_data$year)) +
-      # Change theme to minimal
-      theme_minimal() +
-      # Format title, subtitle, and axis titles
-      theme(plot.title = element_text(size = 18, face = "bold.italic", hjust = .1), 
-            plot.subtitle = element_text(size = 16, face = "bold", color = "#005A9C", hjust = 0.12, family = "serif"),
-            plot.caption = element_text(size = 10, family = "serif"),
-            axis.title.x = element_text(size = 16, family = "serif", face = "bold", margin = margin(t = 25)),
-            axis.title.y = element_text(size = 16, family = "serif", face = "bold", margin = margin(r = 25)),
-            axis.text.x = element_text(size = 12, family = "serif"),
-            axis.text.y = element_text(size = 12, family = "serif", margin = margin(r = -25)),
-            panel.grid.minor.y = element_blank(), 
-            panel.grid.minor.x = element_blank(),
-            panel.grid.major.y = element_blank(),
-            legend.text = element_text(size = 14, family = "serif"),
-            legend.title = element_text(size = 16, family = "serif")
-      ) +
-      # Add a legend for the color scale
-      guides(color = guide_legend(title = "Team Value", position = "top", override.aes = list(size=10))) +
-      # Annotate Dodgers and Athletics text labels
-      annotate("text", x = 2015, y = 0.66, label = "Los Angeles Dodgers", color = "#005A9C", fontface = "bold", size = 5) +
-      annotate("text", x = 2015, y = 0.38, label = "Oakland Athletics", color = "#11734C", fontface = "bold", size = 5)
+   ![unnamed-chunk-3-1](https://github.com/user-attachments/assets/d549b9b0-651f-4818-a886-b6d4d4ea8587)
 
-![](Final-Project_files/figure-markdown_strict/unnamed-chunk-3-1.png)
 
 Two historically successful teams are in very different positions now.
 The stark contrast between the trajectories of the Los Angeles Dodgers
@@ -552,62 +456,8 @@ years marked the largest contract in sports history.
 
 In 2024, this trio have constituted 54% of the team’s bWAR so far.
 
-    # Plot the stacked bar chart with percentage labels
-    ggplot(combined_war, aes(x = factor(year), y = total_war, fill = source)) +
-      # Add stacked bar chart
-      geom_bar(stat = "identity") +
-      # Add percentage labels for "trio" source
-      geom_text(aes(label = ifelse(source == "trio", paste0(round(percentage_trio_war * 100), "%"), "")),
-                position = position_stack(1),
-                vjust = -.5, color = "black", size = 4, 
-                family = "serif") +  
-      # Add threshold line
-      geom_hline(yintercept = 40, linetype = "dashed", color = "black") + 
-      # Add labels and titles
-      labs(x = "Year", y = "Total bWAR", 
-           subtitle = "Dodgers' Team bWAR Since 2020",
-           title = "Betts, Freeman, and Ohtani Alone Have 54% of LA's 2024 bWAR",
-           caption = "Data source: Baseball Reference & MLB | Note: the 2020 was a shortened season, the 2024 season is currently ongoing, 2024 season data correct as of April 17th, 2024") +
-      # Apply minimal theme
-      theme_minimal() +
-      # Format title, subtitle, and axis titles
-      theme(plot.title = element_text(size = 18, face = "bold.italic"), 
-            plot.subtitle = element_text(size = 16, face = "bold", color = "#EF3E42", hjust = 0.02, family = "serif"),
-            axis.title.x = element_text(size = 14, family = "serif", face = "bold", margin = margin(t = 25)),
-            axis.title.y = element_text(size = 14, family = "serif", face = "bold", margin = margin(r = 25)),
-            plot.caption = element_text(size = 10, family = "serif", margin = margin(t = 25)),
-            axis.text.x = element_text(size = 12, family = "serif"),
-            axis.text.y = element_text(size = 12, family = "serif"),
-            panel.grid.minor.y = element_blank(),
-            panel.grid.minor.x = element_blank(),
-            panel.grid.major.y = element_blank(),
-            panel.grid.major.x = element_blank(),
-            legend.text = element_text(size = 12, family = "serif")
-            ) +
-      # Set colors and legend labels
-      scale_fill_manual(values = c("trio" = "#EF3E42", "dodgers" = "#005A9C"),  
-                        labels = c("trio" = "Trio", "dodgers" = "Other Dodgers")) +  
-      # Add legend for the color scale
-      guides(fill = guide_legend(title = "", position = "top", override.aes = list(size=7))) +
-      # Add annotation text
-      annotate("text", x = .7, y = 40, label = "Postseason Threshold:", 
-               size = 4, family = "serif", vjust = -.5, hjust = .1, color = "black") +
-      annotate("text", x = .7, y = 40, label = "~40 WAR", 
-               size = 4, family = "serif", vjust = 1.5, hjust = -.3, color = "black") +
-      annotate("text", x = 1, y = 15, label = "Betts Joins", 
-               size = 4, family = "serif", vjust = 0, color = "white") +
-      annotate("text", x = 1, y = 13, label = "in 2020", 
-               size = 4, family = "serif", color = "white") +
-      annotate("text", x = 3, y = 15, label = "Freeman Joins", 
-               size = 4, family = "serif", vjust = 0, color = "white") +
-      annotate("text", x = 3, y = 13, label = "in 2022", 
-               size = 4, family = "serif", color = "white") +
-      annotate("text", x = 5, y = 15, label = "Ohtani Joins", 
-               size = 4, family = "serif", vjust = 0, color = "black") +
-      annotate("text", x = 5, y = 13, label = "in 2024", 
-               size = 4, family = "serif", color = "black")
-
-![](Final-Project_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+  ![unnamed-chunk-4-1](https://github.com/user-attachments/assets/7721940f-dfe4-424f-b78a-92c96c82c1ac)
+ 
 
 ### Shohei Ohtani as a Reflection of Spending Disparity
 
